@@ -1,0 +1,11 @@
+
+ .panel-heading .btn-group {
+   float: right;
+ }
+ .selected{
+ 	padding-top: 0px;
+ 	margin-top: -5px;
+ }
+ .imageSelected{
+ 	margin-top: 6px;
+ }

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Nutrientes</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body style="padding-top: 25px;">
+    <div class="container theme-showcase" role="main" >
+      <div class="row" >
+        <div class="col-sm-8" id="collapseControl1" >
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Detalles del nutriente</h3>
+            </div>
+            <div class="panel-body">
+              <div class="alert alert-info" role="alert">
+                <span>Nombre: </span>
+                <strong id="name"> </strong>
+              </div>
+              <div class="alert alert-info" role="alert">
+                <span>Descripcion: </span>
+                <strong id="description"> </strong>
+              </div>
+              <div class="alert alert-info" role="alert">
+                <span>Presentacion: </span>
+                <strong id="presentation"> </strong>
+              </div>
+
+              <div class="alert alert-success" role="alert">
+                <span>Edad aceptable. Mínimo:  </span>
+                <strong id="rangeAgeMin">  </strong>
+                <span>Máximo:  </span>
+                <strong id="rangeAgeMax">  </strong>
+              </div>
+
+              <div class="alert alert-success" role="alert">
+                <span>Edad recomendable. Mínimo:  </span>
+                <strong id="targetAgeMin">  </strong>
+                <span>Máximo:  </span>
+                <strong id="targetAgeMax">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Objetivos o Beneficios: </span>
+                <strong id="benefits">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Órganos beneficiados: </span>
+                <strong id="organsBenefited">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Órganos mas beneficiados: </span>
+                <strong id="organsMoreBenefited">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Órganos afectados: </span>
+                <strong id="organsAffected">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Enfermedades beneficiadas: </span>
+                <strong id="diseaseBenefited">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Enfermedades mas beneficiadas: </span>
+                <strong id="diseaseMoreBenefited">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Enfermedades afectadas: </span>
+                <strong id="diseaseAffected">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Combinacion recomendada: </span>
+                <strong id="recommendedCombination">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Combinacion prohibida: </span>
+                <strong id="prohibitedCombination">  </strong>
+              </div>
+
+              <div class="alert alert-info" role="alert">
+                <span>Dosis: cantidad</span>
+                <strong id="quantity">  </strong>
+                <span>Lapso:  </span>
+                <strong id="lapse">  </strong>
+              </div>
+
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Elija un nutriente</h3>
+            </div>
+            <div class="panel-body">
+              <div id="listaNutrientes" class="list-group"></div>
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/nutrientes.js"></script>
+    <script>
+      var data = JSON.parse(nutrientes);
+
+
+      function showDetails(item){
+        console.log(item);
+        //Se imprime un valor
+        $('#name').text(item.name);
+
+        $('#description').text(item.description);
+        $('#presentation').text(item.presentation);
+        //Se imprimen sub valores
+        $('#rangeAgeMin').text(item.rangeAge.min);
+        $('#rangeAgeMax').text(item.rangeAge.max);
+
+        $('#targetAgeMin').text(item.targetAge.min);
+        $('#targetAgeMax').text(item.targetAge.max);
+
+        $('#quantity').text(item.dose.quantity);
+        $('#lapse').text(item.dose.lapse);
+        //Se imprimen listas
+        var organsBenefited = "";
+        item.organsBenefited.map(function(item){
+          organsBenefited = organsBenefited + item + ', ';
+        });
+        $('#organsBenefited').text(organsBenefited);
+        //Otra lista
+        var benefits = "";
+        item.benefits.map(function(item){
+          benefits = benefits + item.name + ', ';
+        });
+        $('#benefits').text(benefits);
+
+        var organsMoreBenefited = "";
+        item.organsMoreBenefited.map(function(item){
+          organsMoreBenefited = organsMoreBenefited + item + ', ';
+        });
+        $('#organsMoreBenefited').text(organsMoreBenefited);
+
+        var organsAffected = "";
+        item.organsAffected.map(function(item){
+          organsAffected= organsAffected + name + ', ';
+        });
+        $('#organsAffected').text(organsAffected);
+
+        var diseaseBenefited = "";
+        item.diseaseBenefited.map(function(item){
+          diseaseBenefited= diseaseBenefited + name + ', ';
+        });
+        $('#diseaseBenefited').text(diseaseBenefited);
+
+        var diseaseMoreBenefited = "";
+        item.diseaseMoreBenefited.map(function(item){
+          diseaseMoreBenefited= diseaseMoreBenefited + name + ', ';
+        });
+        $('#diseaseMoreBenefited').text(diseaseMoreBenefited);
+
+        var diseaseAffected = "";
+        item.diseaseAffected.map(function(item){
+          diseaseAffected = diseaseAffected + item + ', ';
+        });
+        $('#diseaseAffected').text(diseaseAffected);
+
+        var recommendedCombination = "";
+        item.recommendedCombination.map(function(item){
+          recommendedCombination = recommendedCombination + item + ', ';
+        });
+        $('#recommendedCombination').text(recommendedCombination);
+
+        var prohibitedCombination = "";
+        item.prohibitedCombination.map(function(item){
+          prohibitedCombination = prohibitedCombination + item + ', ';
+        });
+        $('#prohibitedCombination').text(prohibitedCombination);
+
+      }
+
+      function displayFirstResult(){
+        var item = data[0];
+        showDetails(item);
+        $('#0').addClass('active');
+      }
+
+      function listenerDisplayDetails(){
+        $('.list-group a').click(function(e) {
+          e.preventDefault();
+          //$("#details p").remove();
+          $that = $(this);
+          //Se quitan las clase active de la lista
+          $('.list-group a').removeClass("active");
+          //Se coloca la clase active al item actual
+          $that.addClass('active');
+
+          var id = e.target.id;
+          showDetails(data[id]);
+          console.log(data[id]);
+        });
+      }
+
+      function displayList(){
+        var i = 0;
+        data.map(function(item){
+          $('#listaNutrientes').append($('<a/>',{href:"",id:i,class:"list-group-item",text:item.name}));
+          i++;
+        });
+        $('#0').addClass('active');
+      }
+
+      displayList();
+      displayFirstResult();
+      listenerDisplayDetails();
+    </script>
+  </body>
+</html>
